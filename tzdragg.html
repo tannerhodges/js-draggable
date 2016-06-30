@@ -31,9 +31,10 @@
         this.el = el;
         this.diffX = 0;
         this.diffY = 0;
+        this.mousemoveListener = function(){};
+        this.mouseupListener = function(){};
 
         this.el.addEventListener('mousedown', this.startMoving.bind(this));
-        this.el.addEventListener('mouseup', this.stopMoving.bind(this));
     }
 
     /**
@@ -65,7 +66,10 @@
         this.diffY = mouseY - (this.el.style.top.replace('px', '') || 0);
 
         this.mousemoveListener = this.move.bind(this);
+        this.mouseupListener = this.stopMoving.bind(this);
+
         document.addEventListener('mousemove', this.mousemoveListener);
+        document.addEventListener('mouseup', this.mouseupListener);
     };
 
     /**
@@ -75,6 +79,7 @@
      */
     Draggable.prototype.stopMoving = function(event) {
         document.removeEventListener('mousemove', this.mousemoveListener);
+        document.addEventListener('mouseup', this.mouseupListener);
     };
 
 
