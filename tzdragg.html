@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<!-- saved from url=(0053)http://fiddle.jshell.net/thezillion/Qx44z/show/light/ -->
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="googlebot" content="noindex, nofollow">
+    <title>TZDragg by thezillion</title>
+    <style>
+    #elem {
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        background-color: black;
+        user-select: none;
+        cursor: default;
+    }
+    </style>
+</head>
+<body>
+    <div id="elem" onmousedown="tzdragg.startMoving(event);" onmouseup="tzdragg.stopMoving();" style="top: 231px; left: 621px;"></div>
+
+    <script>
+    // Coded by TheZillion in a quarter of an hour. [thezillion.wordpress.com]
+    function $(el) {
+        return document.getElementById(el);
+    }
+    var tzdragg = function() {
+        return {
+            move: function(divid, xpos, ypos) {
+                var a = $(divid);
+                $(divid).style.left = xpos + 'px';
+                $(divid).style.top = ypos + 'px';
+            },
+            startMoving: function(evt) {
+                evt = evt || window.event;
+                var posX = evt.clientX,
+                    posY = evt.clientY,
+                    a = $('elem'),
+                    divTop = a.style.top,
+                    divLeft = a.style.left;
+                divTop = divTop.replace('px', '');
+                divLeft = divLeft.replace('px', '');
+                var diffX = posX - divLeft,
+                    diffY = posY - divTop;
+                document.onmousemove = function(evt) {
+                    evt = evt || window.event;
+                    var posX = evt.clientX,
+                        posY = evt.clientY,
+                        aX = posX - diffX,
+                        aY = posY - diffY;
+                    tzdragg.move('elem', aX, aY);
+                }
+            },
+            stopMoving: function() {
+                var a = document.createElement('script');
+                document.onmousemove = function() {}
+            }
+        }
+    }();
+    </script>
+</body>
+</html>
