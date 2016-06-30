@@ -1,11 +1,9 @@
-<!DOCTYPE html>
-<!-- saved from url=(0053)http://fiddle.jshell.net/thezillion/Qx44z/show/light/ -->
+<!doctype html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="robots" content="noindex, nofollow">
-    <meta name="googlebot" content="noindex, nofollow">
-    <title>TZDragg by thezillion</title>
+    <title>Simple, JS Draggable (based on TZDragg by thezillion)</title>
+    <!-- Based on http://fiddle.jshell.net/thezillion/Qx44z -->
     <style>
     #elem {
         position: absolute;
@@ -18,46 +16,74 @@
     </style>
 </head>
 <body>
-    <div id="elem" onmousedown="tzdragg.startMoving(event);" onmouseup="tzdragg.stopMoving();" style="top: 231px; left: 621px;"></div>
+    <div id="elem" style="top: 10px; left: 10px;"></div>
 
     <script>
-    // Coded by TheZillion in a quarter of an hour. [thezillion.wordpress.com]
-    function $(el) {
-        return document.getElementById(el);
+    // ------------------------------
+    // Draggable
+    // ------------------------------
+
+    /**
+     * Create a simple, draggable element.
+     * @param {Element}  el
+     */
+    function Draggable(el) {
+        this.el = el;
+        this.diffX = 0;
+        this.diffY = 0;
+
+        this.el.addEventListener('mousedown', this.startMoving.bind(this));
+        this.el.addEventListener('mouseup', this.stopMoving.bind(this));
     }
-    var tzdragg = function() {
-        return {
-            move: function(divid, xpos, ypos) {
-                var a = $(divid);
-                $(divid).style.left = xpos + 'px';
-                $(divid).style.top = ypos + 'px';
-            },
-            startMoving: function(evt) {
-                evt = evt || window.event;
-                var posX = evt.clientX,
-                    posY = evt.clientY,
-                    a = $('elem'),
-                    divTop = a.style.top,
-                    divLeft = a.style.left;
-                divTop = divTop.replace('px', '');
-                divLeft = divLeft.replace('px', '');
-                var diffX = posX - divLeft,
-                    diffY = posY - divTop;
-                document.onmousemove = function(evt) {
-                    evt = evt || window.event;
-                    var posX = evt.clientX,
-                        posY = evt.clientY,
-                        aX = posX - diffX,
-                        aY = posY - diffY;
-                    tzdragg.move('elem', aX, aY);
-                }
-            },
-            stopMoving: function() {
-                var a = document.createElement('script');
-                document.onmousemove = function() {}
-            }
-        }
-    }();
+
+    /**
+     * Move an element by setting its left and top positions.
+     * @param  {Number}  x
+     * @param  {Number}  y
+     * @return {void}
+     */
+    Draggable.prototype.move = function(event) {
+        var newX = event.clientX - this.diffX,
+            newY = event.clientY - this.diffY;
+
+        requestAnimationFrame((function() {
+            this.el.style.left = newX + 'px';
+            this.el.style.top  = newY + 'px';
+        }).bind(this));
+    };
+
+    /**
+     * Add mousemove event listener for element.
+     * @param  {Event}  event
+     * @return {void}
+     */
+    Draggable.prototype.startMoving = function(event) {
+        var mouseX = event.clientX,
+            mouseY = event.clientY;
+
+        this.diffX = mouseX - (this.el.style.left.replace('px', '') || 0);
+        this.diffY = mouseY - (this.el.style.top.replace('px', '') || 0);
+
+        this.mousemoveListener = this.move.bind(this);
+        document.addEventListener('mousemove', this.mousemoveListener);
+    };
+
+    /**
+     * Remove mousemove event listener and reset.
+     * @param  {Event}  event
+     * @return {void}
+     */
+    Draggable.prototype.stopMoving = function(event) {
+        document.removeEventListener('mousemove', this.mousemoveListener);
+    };
+
+
+
+    // ------------------------------
+    // Demo
+    // ------------------------------
+
+    var draggable = new Draggable(document.querySelector('#elem'));
     </script>
 </body>
 </html>
