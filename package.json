@@ -1,0 +1,25 @@
+{
+  "name": "js-draggable",
+  "version": "1.0.0",
+  "description": "Simple JS Draggable",
+  "main": "js/js-draggable.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tannerhodges/js-draggable.git"
+  },
+  "keywords": [
+    "draggable"
+  ],
+  "author": {
+    "name": "Tanner Hodges",
+    "url": "https://github.com/tannerhodges"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tannerhodges/js-draggable/issues"
+  },
+  "homepage": "https://github.com/tannerhodges/js-draggable#readme"
+}
