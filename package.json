@@ -2,7 +2,7 @@
   "name": "js-draggable",
   "version": "1.0.3",
   "description": "Simple JS Draggable",
-  "main": "js/js-draggable.js",
+  "main": "docs/js/js-draggable.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
