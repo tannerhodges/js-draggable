@@ -1,6 +1,6 @@
 {
   "name": "js-draggable",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Simple JS Draggable",
   "main": "docs/js/js-draggable.js",
   "scripts": {
