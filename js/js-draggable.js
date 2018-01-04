@@ -1,14 +1,19 @@
-// Universal Module Definition: AMD Web
+// Universal Module Definition: Return Exports
 // https://github.com/umdjs/umd/blob/master/templates/amdWeb.js
 (function (root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
     define([], factory);
+  } else if (typeof module === 'object' && module.exports) {
+    // Node. Does not work with strict CommonJS, but
+    // only CommonJS-like environments that support module.exports,
+    // like Node.
+    module.exports = factory();
   } else {
-    // Browser globals
-    root.Draggable = factory();
+    // Browser globals (root is window)
+    root.returnExports = factory();
   }
-}(typeof self !== 'undefined' ? self : this, function() {
+}(typeof self !== 'undefined' ? self : this, function () {
 
   // ------------------------------
   // Simple JS Draggable
