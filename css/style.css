@@ -1,8 +1,8 @@
 #elem {
-    position: absolute;
-    width: 100px;
-    height: 100px;
-    background-color: black;
-    user-select: none;
-    cursor: default;
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  background-color: black;
+  user-select: none;
+  cursor: default;
 }
