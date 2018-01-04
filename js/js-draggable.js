@@ -27,11 +27,26 @@
     this.el = el;
     this.diffX = 0;
     this.diffY = 0;
+    this.callbacks = {
+      dragstart: [],
+      dragend: [],
+      move: []
+    };
     this.mousemoveListener = function(){};
     this.mouseupListener = function(){};
 
     this.el.addEventListener('mousedown', this.startMoving.bind(this));
   }
+
+  /**
+   * Add event callbacks.
+   * @param  {String}    type
+   * @param  {Function}  callback
+   * @return {void}
+   */
+  Draggable.prototype.on = function(type, callback) {
+    this.callbacks[type].push(callback);
+  };
 
   /**
    * Move an element by setting its left and top positions.
@@ -46,6 +61,13 @@
     requestAnimationFrame((function() {
       this.el.style.left = newX + 'px';
       this.el.style.top  = newY + 'px';
+
+      // Callback: move
+      if (this.callbacks.move.length > 0) {
+        this.callbacks.move.forEach((function(fn) {
+          fn.call(this);
+        }).bind(this));
+      }
     }).bind(this));
   };
 
@@ -66,6 +88,13 @@
 
     document.addEventListener('mousemove', this.mousemoveListener);
     document.addEventListener('mouseup', this.mouseupListener);
+
+    // Callback: dragstart
+    if (this.callbacks.dragstart.length > 0) {
+      this.callbacks.dragstart.forEach((function(fn) {
+        fn.call(this);
+      }).bind(this));
+    }
   };
 
   /**
@@ -76,6 +105,13 @@
   Draggable.prototype.stopMoving = function(event) {
     document.removeEventListener('mousemove', this.mousemoveListener);
     document.addEventListener('mouseup', this.mouseupListener);
+
+    // Callback: dragend
+    if (this.callbacks.dragend.length > 0) {
+      this.callbacks.dragend.forEach((function(fn) {
+        fn.call(this);
+      }).bind(this));
+    }
   };
 
   return Draggable;

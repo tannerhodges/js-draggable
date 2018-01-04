@@ -1,21 +1,31 @@
 <!doctype html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Simple JS Draggable</title>
-    <link rel="stylesheet" href="css/style.css">
-    <script defer src="js/js-draggable.js"></script>
-    <script defer>
-    window.addEventListener('DOMContentLoaded', function() {
-        var el = document.querySelector('#elem');
-        var draggable = new Draggable(el);
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Simple JS Draggable</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script defer src="js/js-draggable.js"></script>
+  <script defer>
+  window.addEventListener('DOMContentLoaded', function() {
+    var el = document.querySelector('#elem');
+    var draggable = new Draggable(el);
+
+    draggable.on('dragstart', function() {
+      console.log('dragstart', this);
     });
-    </script>
+    draggable.on('dragend', function() {
+      console.log('dragend', this);
+    });
+    draggable.on('move', function() {
+      console.log('move', this.diffX, this.diffY);
+    });
+  });
+  </script>
 </head>
 <body>
-    <h1>Simple JS Draggable</h1>
-    <p>Based on <a href="http://fiddle.jshell.net/thezillion/Qx44z">TZDragg by thezillion</a></p>
+  <h1>Simple JS Draggable</h1>
+  <p>Based on <a href="http://fiddle.jshell.net/thezillion/Qx44z">TZDragg by thezillion</a></p>
 
-    <div id="elem" style="top: 120px; left: 10px;"></div>
+  <div id="elem" style="top: 120px; left: 10px;"></div>
 </body>
 </html>
