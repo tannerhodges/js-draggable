@@ -8,17 +8,13 @@
   <script defer>
   window.addEventListener('DOMContentLoaded', function() {
     var el = document.querySelector('#elem');
+
     var draggable = new Draggable(el);
 
-    draggable.on('dragstart', function() {
-      console.log('dragstart', this);
-    });
-    draggable.on('dragend', function() {
-      console.log('dragend', this);
-    });
-    draggable.on('move', function() {
-      console.log('move', this.diffX, this.diffY);
-    });
+    draggable
+      .on('dragstart', function() { console.log('dragstart', this); })
+      .on('dragend', function() { console.log('dragend', this); })
+      .on('move', function() { console.log('move', this.diffX, this.diffY); });
   });
   </script>
 </head>

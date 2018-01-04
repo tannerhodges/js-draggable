@@ -46,6 +46,8 @@
    */
   Draggable.prototype.on = function(type, callback) {
     this.callbacks[type].push(callback);
+
+    return this;
   };
 
   /**
@@ -69,6 +71,8 @@
         }).bind(this));
       }
     }).bind(this));
+
+    return this;
   };
 
   /**
@@ -95,6 +99,8 @@
         fn.call(this);
       }).bind(this));
     }
+
+    return this;
   };
 
   /**
@@ -112,6 +118,8 @@
         fn.call(this);
       }).bind(this));
     }
+
+    return this;
   };
 
   return Draggable;
