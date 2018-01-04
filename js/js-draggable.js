@@ -11,7 +11,7 @@
     module.exports = factory();
   } else {
     // Browser globals (root is window)
-    root.returnExports = factory();
+    root.Draggable = factory();
   }
 }(typeof self !== 'undefined' ? self : this, function () {
 
